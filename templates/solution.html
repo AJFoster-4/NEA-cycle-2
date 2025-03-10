@@ -19,7 +19,7 @@
                     {% if gridData[c][r] == 0: %}
                         <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = "" >
                     {% else: %}
-                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = {{ gridData[c][r] }} readonly>
+                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-readOnly" type = "number" value = {{ gridData[c][r] }} readonly>
                     {% endif %}
                 {% endfor %}
             </div>

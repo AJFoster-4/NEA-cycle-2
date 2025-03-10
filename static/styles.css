@@ -27,6 +27,13 @@ h1{
     text-align: center;
 }
 
+.grid-cell-readOnly{
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    background-color: rgb(80, 240, 173);
+}
+
 input[type="submit"]{
     margin-top: 10px;
 }
