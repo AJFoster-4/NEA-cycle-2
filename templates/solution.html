@@ -16,7 +16,11 @@
             {% for r in range(gridData|length) %}
             <div class = "grid-row">
                 {% for c in range(gridData|length) %}
-                    <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = {{ gridData[c][r] }} >
+                    {% if gridData[c][r] == 0: %}
+                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = "" >
+                    {% else: %}
+                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = {{ gridData[c][r] }} readonly>
+                    {% endif %}
                 {% endfor %}
             </div>
             {% endfor %}
