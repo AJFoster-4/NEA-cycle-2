@@ -79,6 +79,22 @@ def display(bo):
 def displayGrid():
 
     if request.method == "POST":
+
+        #retrieve form data and turn it into a list
+        form_data = request.form
+        userGridData = []
+        for r in range(9):
+            row = []
+            for c in range(9):
+                cell_name = f"r{r}c{c}"
+                cell_value = form_data.get(cell_name, "")
+                if cell_value.isdigit():
+                    row.append(int(cell_value))
+                else:
+                    row.append(0)
+            userGridData.append(row)
+
+
         #work out how to get all form data and turn it into a list
         #compare this new list with the solution
         #create a new list with indication of correct or not
