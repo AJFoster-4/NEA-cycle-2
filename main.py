@@ -79,7 +79,17 @@ def display(bo):
 def displayGrid():
 
     if request.method == "POST":
-
+        checkedGridData = [
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+        ]
         #retrieve form data and turn it into a list
         form_data = request.form
         userGridData = []
@@ -94,23 +104,22 @@ def displayGrid():
                     row.append(0)
             userGridData.append(row)
 
+        for r in range(9):
+            for c in range(9):
+                if userGridData[r][c]==solution[r][c] and userGridData[r][c]!=0:
+                    checkedGridData[r][c]=True
+                elif userGridData[r][c]==0:
+                    checkedGridData[r][c]=None
+                else:
+                    checkedGridData[r][c]=False
 
+        return render_template("solution.html", gridData=userGridData, solution=solution, checkedGridData=checkedGridData)
         #work out how to get all form data and turn it into a list
         #compare this new list with the solution
         #create a new list with indication of correct or not
         #iterate through this new list to decide what colour to highlight cells
 
-        gridData = [
-            [[1,False],"","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-        ]
+        
         #check if it is right or wrong
     else:
         ##Generate a new sudoku
