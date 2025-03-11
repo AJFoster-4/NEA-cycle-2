@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku</title>
     <link rel = "stylesheet" href = "{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .correct {
+            background-color: green;
+        }
+        .incorrect {
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
     <h1>SUDOKU</h1>
@@ -19,7 +27,7 @@
                     {% if gridData[c][r] == 0: %}
                         <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = "" >
                     {% else: %}
-                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-readOnly" type = "number" value = {{ gridData[c][r] }} readonly>
+                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-readOnly {% if checkedGridData[r][c] == True %}correct{% elif checkedGridData[r][c] == False %}incorrect{% endif %}" type = "number" value = {{ gridData[c][r] }} readonly>
                     {% endif %}
                 {% endfor %}
             </div>

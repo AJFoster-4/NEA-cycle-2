@@ -79,6 +79,7 @@ def display(bo):
 def displayGrid():
 
     if request.method == "POST":
+        
         checkedGridData = [
             ["","","","","","","","",""],
             ["","","","","","","","",""],
