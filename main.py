@@ -57,17 +57,17 @@ def solve(bo):
 
 
 
-def display(bo):
-    for i in range(9):
-        if i%3==0 and i!=0:
-            print("- - - - - - - - - - - - - ")
-        for j in range(9):
-            if j%3==0 and j!=0:
-                print(" | ", end="")
-            if j==8:
-                print(bo[i][j])
-            else:
-                print(str(bo[i][j])+" ", end="")
+# def display(bo):
+#     for i in range(9):
+#         if i%3==0 and i!=0:
+#             print("- - - - - - - - - - - - - ")
+#         for j in range(9):
+#             if j%3==0 and j!=0:
+#                 print(" | ", end="")
+#             if j==8:
+#                 print(bo[i][j])
+#             else:
+#                 print(str(bo[i][j])+" ", end="")
 #displays the board; uses integer division to determine when to print horizontal and vertical lines
 
 
@@ -108,11 +108,11 @@ def displayGrid():
         for r in range(9):
             for c in range(9):
                 if userGridData[r][c]==solution[r][c] and userGridData[r][c]!=0:
-                    checkedGridData[r][c]=True
+                    checkedGridData[r][c]="correct"
                 elif userGridData[r][c]==0:
-                    checkedGridData[r][c]=None
+                    checkedGridData[r][c]="empty"
                 else:
-                    checkedGridData[r][c]=False
+                    checkedGridData[r][c]="incorrect"
 
         return render_template("solution.html", gridData=userGridData, solution=solution, checkedGridData=checkedGridData)
         #work out how to get all form data and turn it into a list

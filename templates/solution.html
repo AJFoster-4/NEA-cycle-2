@@ -27,7 +27,7 @@
                     {% if gridData[c][r] == 0: %}
                         <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = "" >
                     {% else: %}
-                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-readOnly {% if checkedGridData[r][c] == True %}correct{% elif checkedGridData[r][c] == False %}incorrect{% endif %}" type = "number" value = {{ gridData[c][r] }} readonly>
+                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-readOnly{{checkedGridData[r][c]}}" type = "number" value = {{ gridData[c][r] }} readonly>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -38,3 +38,7 @@
     </form>
 </body>
 </html>
+
+#issues: the re-output of a grid after answers have been checked may be fucked, as it will make any cells which the user has entered numbers to readOnly.
+#on a similar vein, the original grid may be output again, not including the user's inputs.
+#this is all on line 30
