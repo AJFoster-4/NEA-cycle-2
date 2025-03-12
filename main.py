@@ -57,17 +57,17 @@ def solve(bo):
 
 
 
-# def display(bo):
-#     for i in range(9):
-#         if i%3==0 and i!=0:
-#             print("- - - - - - - - - - - - - ")
-#         for j in range(9):
-#             if j%3==0 and j!=0:
-#                 print(" | ", end="")
-#             if j==8:
-#                 print(bo[i][j])
-#             else:
-#                 print(str(bo[i][j])+" ", end="")
+def display(bo):
+    for i in range(9):
+        if i%3==0 and i!=0:
+            print("- - - - - - - - - - - - - ")
+        for j in range(9):
+            if j%3==0 and j!=0:
+                print(" | ", end="")
+            if j==8:
+                print(bo[i][j])
+            else:
+                print(str(bo[i][j])+" ", end="")
 #displays the board; uses integer division to determine when to print horizontal and vertical lines
 
 
@@ -79,18 +79,7 @@ def solve(bo):
 def displayGrid():
 
     if request.method == "POST":
-        
-        checkedGridData = [
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-        ]
+
         #retrieve form data and turn it into a list
         form_data = request.form
         userGridData = []
@@ -105,22 +94,23 @@ def displayGrid():
                     row.append(0)
             userGridData.append(row)
 
-        for r in range(9):
-            for c in range(9):
-                if userGridData[r][c]==solution[r][c] and userGridData[r][c]!=0:
-                    checkedGridData[r][c]="correct"
-                elif userGridData[r][c]==0:
-                    checkedGridData[r][c]="empty"
-                else:
-                    checkedGridData[r][c]="incorrect"
 
-        return render_template("solution.html", gridData=userGridData, solution=solution, checkedGridData=checkedGridData)
         #work out how to get all form data and turn it into a list
         #compare this new list with the solution
         #create a new list with indication of correct or not
         #iterate through this new list to decide what colour to highlight cells
 
-        
+        gridData = [
+            [[1,False],"","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+            ["","","","","","","","",""],
+        ]
         #check if it is right or wrong
     else:
         ##Generate a new sudoku
@@ -151,45 +141,3 @@ def displayGrid():
 
 
 app.run(debug = True)  
-
-
-
-
-
-
-
-
-
-# def insertNum(number, row, col):
-#     board[row][col]=number
-
-
-# def displayErrors(bo, solvedBo):
-#     for r in range(9):
-#         for c in range(9):
-#             if bo[r][c]!=solvedBo[r][c] and bo[r][c]!=0:
-#                 print("Error at row "+str(r)+" and column "+str(c)+".")
-
-
-# def play(board):
-#     display(board)
-#     empty=[row[:] for row in board]
-#     solved=solve(empty)
-#     done=False
-#     while done==False:
-#         choice = input("Do you want to A: enter a number, B: check your inputs, or C: view the solution?")
-#         if choice=="A" or choice=="a":
-#             num=int(input("Enter number (1 to 9): "))
-#             x=int(input("Enter x coordinate (0 to 8): "))
-#             y=int(input("Enter y coordinate (0 to 8): "))
-#             insertNum(num, x , y)
-#             display(board)
-#         elif choice=="B" or choice=="b":
-#             displayErrors(board, solved)
-#         elif choice=="C" or choice=="c":
-#             display(solved)
-#             done=True
-#         else:
-#             print("Invalid input")
-
-# play(board)
