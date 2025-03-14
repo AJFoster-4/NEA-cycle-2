@@ -57,17 +57,17 @@ def solve(bo):
 
 
 
-def display(bo):
-    for i in range(9):
-        if i%3==0 and i!=0:
-            print("- - - - - - - - - - - - - ")
-        for j in range(9):
-            if j%3==0 and j!=0:
-                print(" | ", end="")
-            if j==8:
-                print(bo[i][j])
-            else:
-                print(str(bo[i][j])+" ", end="")
+# def display(bo):
+#     for i in range(9):
+#         if i%3==0 and i!=0:
+#             print("- - - - - - - - - - - - - ")
+#         for j in range(9):
+#             if j%3==0 and j!=0:
+#                 print(" | ", end="")
+#             if j==8:
+#                 print(bo[i][j])
+#             else:
+#                 print(str(bo[i][j])+" ", end="")
 #displays the board; uses integer division to determine when to print horizontal and vertical lines
 
 
@@ -81,18 +81,35 @@ def displayGrid():
     if request.method == "POST":
 
         #retrieve form data and turn it into a list
-        form_data = request.form
-        userGridData = []
+        formData = request.form
+        userGridData = [
+                ["","","","","","","","",""],
+                ["","","","","","","","",""],
+                ["","","","","","","","",""],
+                ["","","","","","","","",""],
+                ["","","","","","","","",""],
+                ["","","","","","","","",""],
+                ["","","","","","","","",""],
+                ["","","","","","","","",""],
+                ["","","","","","","","",""]
+            ]
         for r in range(9):
-            row = []
             for c in range(9):
-                cell_name = f"r{r}c{c}"
-                cell_value = form_data.get(cell_name, "")
-                if cell_value.isdigit():
-                    row.append(int(cell_value))
+                cellName = f"r{r}c{c}"
+                cellValue = formData.get(cellName, "")
+                if cellValue.isdigit():
+                    userGridData[r][c]=(int(cellValue))
                 else:
-                    row.append(0)
-            userGridData.append(row)
+                    userGridData[r][c]=0
+
+        for r in range(9):
+            for c in range(9):
+                if userGridData[r][c]==solution[r][c] and userGridData[r][c]!=0:
+                    gridDataB[r][c][1]=True
+                elif userGridData[r][c]==0:
+                    pass
+                else:
+                    gridDataB[r][c][1]=False
 
 
         #work out how to get all form data and turn it into a list
@@ -100,8 +117,7 @@ def displayGrid():
         #create a new list with indication of correct or not
         #iterate through this new list to decide what colour to highlight cells
 
-        gridData = [
-            [[1,False],"","","","","","","",""],
+        gridDataB = [
             ["","","","","","","","",""],
             ["","","","","","","","",""],
             ["","","","","","","","",""],
@@ -110,13 +126,14 @@ def displayGrid():
             ["","","","","","","","",""],
             ["","","","","","","","",""],
             ["","","","","","","","",""],
+            ["","","","","","","","",""]
         ]
         #check if it is right or wrong
     else:
         ##Generate a new sudoku
         ##Form this as a grid and send the solution and initial grid
         
-        gridData=[
+        gridDataA=[
             [8,0,0,4,0,6,0,0,7],
             [0,0,0,0,0,0,4,0,0],
             [0,1,0,0,0,0,6,5,0],
@@ -128,13 +145,25 @@ def displayGrid():
             [3,0,0,9,0,2,0,0,5]
         ]
 
-        empty=[row[:] for row in gridData]
+        gridDataB = [
+            [[8, True], [0, None], [0, None], [4, True], [0, None], [6, True], [0, None], [0, None], [7, True]],
+            [[0, None], [0, None], [0, None], [0, None], [0, None], [0, None], [4, True], [0, None], [0, None]],
+            [[0, None], [1, True], [0, None], [0, None], [0, None], [0, None], [6, True], [5, True], [0, None]],
+            [[5, True], [0, None], [9, True], [0, None], [3, True], [0, None], [7, True], [8, True], [0, None]],
+            [[0, None], [0, None], [0, None], [0, None], [7, True], [0, None], [0, None], [0, None], [0, None]],
+            [[0, None], [4, True], [8, True], [0, None], [2, True], [0, None], [1, True], [0, None], [3, True]],
+            [[0, None], [5, True], [2, True], [0, None], [0, None], [0, None], [0, None], [9, True], [0, None]],
+            [[0, None], [0, None], [1, True], [0, None], [0, None], [0, None], [0, None], [0, None], [0, None]],
+            [[3, True], [0, None], [0, None], [9, True], [0, None], [2, True], [0, None], [0, None], [5, True]]
+        ]
+
+        empty=[row[:] for row in gridDataA]
         solution=solve(empty)
         
 
         
         
-    return render_template("solution.html", gridData = gridData, solution = solution)
+    return render_template("solution.html", gridData = gridDataB, solution = solution)
 
 
 

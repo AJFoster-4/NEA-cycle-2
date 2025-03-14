@@ -34,6 +34,13 @@ h1{
     background-color: rgb(80, 240, 173);
 }
 
+.grid-cell-wrong{
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    background-color: rgb(230, 20, 20);
+}
+
 input[type="submit"]{
     margin-top: 10px;
 }
