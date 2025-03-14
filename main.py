@@ -56,32 +56,21 @@ def solve(bo):
 
 
 
-
-# def display(bo):
-#     for i in range(9):
-#         if i%3==0 and i!=0:
-#             print("- - - - - - - - - - - - - ")
-#         for j in range(9):
-#             if j%3==0 and j!=0:
-#                 print(" | ", end="")
-#             if j==8:
-#                 print(bo[i][j])
-#             else:
-#                 print(str(bo[i][j])+" ", end="")
-#displays the board; uses integer division to determine when to print horizontal and vertical lines
-
-
-
-
+solution=None
+gridDataB=None
 
 
 @app.route("/", methods = ["get","post"])
 def displayGrid():
 
+    global solution, gridDataB
+
     if request.method == "POST":
 
         #retrieve form data and turn it into a list
+
         formData = request.form
+
         userGridData = [
                 ["","","","","","","","",""],
                 ["","","","","","","","",""],
@@ -93,42 +82,28 @@ def displayGrid():
                 ["","","","","","","","",""],
                 ["","","","","","","","",""]
             ]
+        
         for r in range(9):
             for c in range(9):
                 cellName = f"r{r}c{c}"
                 cellValue = formData.get(cellName, "")
                 if cellValue.isdigit():
-                    userGridData[r][c]=(int(cellValue))
+                    userGridData[c][r]=(int(cellValue))
                 else:
-                    userGridData[r][c]=0
-
+                    userGridData[c][r]=0
+        
+        #compare this new list with the solution and assign True or False depending on whether cells are correct
         for r in range(9):
             for c in range(9):
                 if userGridData[r][c]==solution[r][c] and userGridData[r][c]!=0:
+                    gridDataB[r][c][0]=userGridData[r][c]
                     gridDataB[r][c][1]=True
                 elif userGridData[r][c]==0:
                     pass
                 else:
+                    gridDataB[r][c][0]=userGridData[r][c]
                     gridDataB[r][c][1]=False
-
-
-        #work out how to get all form data and turn it into a list
-        #compare this new list with the solution
-        #create a new list with indication of correct or not
-        #iterate through this new list to decide what colour to highlight cells
-
-        gridDataB = [
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""],
-            ["","","","","","","","",""]
-        ]
-        #check if it is right or wrong
+        
     else:
         ##Generate a new sudoku
         ##Form this as a grid and send the solution and initial grid
@@ -170,3 +145,14 @@ def displayGrid():
 
 
 app.run(debug = True)  
+
+
+
+#error log- highlighting function
+
+#added [0] to the end of the gridData calls on lines 23 and 25 in html so the numbers are actually displayed (perviously blank cells)
+#globalised solution and gridDataB
+#new error- everything highlighted red
+#error was on lines 91 and 93, changed c and r around
+#added lines 99 and 104- this meant that the grid wasn't reset to its original state after the form was submitted
+#new error- when a cell is highlighted red, the number inside is replaced with the correct number (very simple fix on line 104, it was a silly mistake)
