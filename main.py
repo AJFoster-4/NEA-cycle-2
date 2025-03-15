@@ -57,58 +57,69 @@ def solve(bo):
 
 
 solution=None
-gridDataB=None
+gridData=None
 
 
 @app.route("/", methods = ["get","post"])
 def displayGrid():
 
-    global solution, gridDataB
+    global solution, gridData
 
     if request.method == "POST":
 
+        action=request.form.get("action")
+
+        if action=="showSolution":
+
+            for r in range(9):
+                for c in range(9):
+                    gridData[r][c][0]=solution[r][c]
+                    gridData[r][c][1]=True
+
+        else:
+        
         #retrieve form data and turn it into a list
 
-        formData = request.form
+            formData = request.form
 
-        userGridData = [
-                ["","","","","","","","",""],
-                ["","","","","","","","",""],
-                ["","","","","","","","",""],
-                ["","","","","","","","",""],
-                ["","","","","","","","",""],
-                ["","","","","","","","",""],
-                ["","","","","","","","",""],
-                ["","","","","","","","",""],
-                ["","","","","","","","",""]
-            ]
-        
-        for r in range(9):
-            for c in range(9):
-                cellName = f"r{r}c{c}"
-                cellValue = formData.get(cellName, "")
-                if cellValue.isdigit():
-                    userGridData[c][r]=(int(cellValue))
-                else:
-                    userGridData[c][r]=0
-        
-        #compare this new list with the solution and assign True or False depending on whether cells are correct
-        for r in range(9):
-            for c in range(9):
-                if userGridData[r][c]==solution[r][c] and userGridData[r][c]!=0:
-                    gridDataB[r][c][0]=userGridData[r][c]
-                    gridDataB[r][c][1]=True
-                elif userGridData[r][c]==0:
-                    pass
-                else:
-                    gridDataB[r][c][0]=userGridData[r][c]
-                    gridDataB[r][c][1]=False
+            userGridData = [
+                    ["","","","","","","","",""],
+                    ["","","","","","","","",""],
+                    ["","","","","","","","",""],
+                    ["","","","","","","","",""],
+                    ["","","","","","","","",""],
+                    ["","","","","","","","",""],
+                    ["","","","","","","","",""],
+                    ["","","","","","","","",""],
+                    ["","","","","","","","",""]
+                ]
+            
+            for r in range(9):
+                for c in range(9):
+                    cellName = f"r{r}c{c}"
+                    cellValue = formData.get(cellName, "")
+                    if cellValue.isdigit():
+                        userGridData[c][r]=(int(cellValue))
+                    else:
+                        userGridData[c][r]=0
+            
+            #compare this new list with the solution and assign True or False depending on whether cells are correct
+            for r in range(9):
+                for c in range(9):
+                    if userGridData[r][c]==solution[r][c] and userGridData[r][c]!=0:
+                        gridData[r][c][0]=userGridData[r][c]
+                        gridData[r][c][1]=True
+                    elif userGridData[r][c]==0:
+                        pass
+                    else:
+                        gridData[r][c][0]=userGridData[r][c]
+                        gridData[r][c][1]=False
         
     else:
         ##Generate a new sudoku
         ##Form this as a grid and send the solution and initial grid
         
-        gridDataA=[
+        gridDataRaw=[
             [8,0,0,4,0,6,0,0,7],
             [0,0,0,0,0,0,4,0,0],
             [0,1,0,0,0,0,6,5,0],
@@ -120,25 +131,36 @@ def displayGrid():
             [3,0,0,9,0,2,0,0,5]
         ]
 
-        gridDataB = [
-            [[8, True], [0, None], [0, None], [4, True], [0, None], [6, True], [0, None], [0, None], [7, True]],
-            [[0, None], [0, None], [0, None], [0, None], [0, None], [0, None], [4, True], [0, None], [0, None]],
-            [[0, None], [1, True], [0, None], [0, None], [0, None], [0, None], [6, True], [5, True], [0, None]],
-            [[5, True], [0, None], [9, True], [0, None], [3, True], [0, None], [7, True], [8, True], [0, None]],
-            [[0, None], [0, None], [0, None], [0, None], [7, True], [0, None], [0, None], [0, None], [0, None]],
-            [[0, None], [4, True], [8, True], [0, None], [2, True], [0, None], [1, True], [0, None], [3, True]],
-            [[0, None], [5, True], [2, True], [0, None], [0, None], [0, None], [0, None], [9, True], [0, None]],
-            [[0, None], [0, None], [1, True], [0, None], [0, None], [0, None], [0, None], [0, None], [0, None]],
-            [[3, True], [0, None], [0, None], [9, True], [0, None], [2, True], [0, None], [0, None], [5, True]]
+        gridData = [
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
+            [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]]
         ]
 
-        empty=[row[:] for row in gridDataA]
+    
+        for r in range(9):
+            for c in range(9):
+                if gridDataRaw[r][c]!=0:
+                    gridData[r][c][0]=gridDataRaw[r][c]
+                    gridData[r][c][1]=True
+                else:
+                    gridData[r][c][0]=gridDataRaw[r][c]
+                    gridData[r][c][1]=None
+
+
+        empty=[row[:] for row in gridDataRaw]
         solution=solve(empty)
         
 
         
         
-    return render_template("solution.html", gridData = gridDataB, solution = solution)
+    return render_template("solution.html", gridData = gridData, solution = solution)
 
 
 
@@ -151,7 +173,7 @@ app.run(debug = True)
 #error log- highlighting function
 
 #added [0] to the end of the gridData calls on lines 23 and 25 in html so the numbers are actually displayed (perviously blank cells)
-#globalised solution and gridDataB
+#globalised solution and gridData
 #new error- everything highlighted red
 #error was on lines 91 and 93, changed c and r around
 #added lines 99 and 104- this meant that the grid wasn't reset to its original state after the form was submitted

@@ -20,7 +20,7 @@
                     {% if gridData[c][r][0] == 0: %}
                         <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = "" >
                     {% elif gridData[c][r][1] == True: %}
-                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-readOnly" type = "number" value = {{ gridData[c][r][0] }} readonly>
+                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-correct" type = "number" value = {{ gridData[c][r][0] }} readonly>
                     {% else: %}
                         <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-wrong" type = "number" value = {{ gridData[c][r][0] }}>
                     {% endif %}
@@ -29,6 +29,7 @@
             {% endfor %}
             </div>
             <input type = "submit" value = "Check Numbers">
+            <button type="submit" name="action" value="showSolution">Show Solution</button>
         </div>
     </form>
 </body>
