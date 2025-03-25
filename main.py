@@ -78,7 +78,7 @@ def displayGrid():
 
         else:
         
-        #retrieve form data and turn it into a list
+            #retrieve form data and turn it into a list
 
             formData = request.form
 
@@ -160,7 +160,7 @@ def displayGrid():
 
         
         
-    return render_template("solution.html", gridData = gridData, solution = solution)
+    return render_template("solution.html", gridData = gridData)
 
 
 
