@@ -4,34 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sudoku</title>
-    <link rel = "stylesheet" href = "{{ url_for('static', filename='styles.css') }}">
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>SUDOKU</h1>
-    <form action = "/" method = "POST">
-        <input type = "hidden" value = {{solution}} name = "solution">
-        <div class = "game-space">
-            <div class = "grid">
-
-            {% for r in range(gridData|length) %}
-            <div class = "grid-row">
-                {% for c in range(gridData|length) %}
-                    {% if gridData[c][r][0] == 0: %}
-                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell" type = "number" value = "" >
-                    {% elif gridData[c][r][1] == True: %}
-                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-correct" type = "number" value = {{ gridData[c][r][0] }} readonly>
-                    {% else: %}
-                        <input name= {{ "r" + r|string + "c" + c|string }} class = "grid-cell-wrong" type = "number" value = {{ gridData[c][r][0] }}>
-                    {% endif %}
+    <form action="/" method="POST">
+        <input type="hidden" value="{{ solution }}" name="solution">
+        <div class="game-space">
+            <div class="grid">
+                {% for r in range(gridData|length) %}
+                <div class="grid-row">
+                    {% for c in range(gridData|length) %}
+                        {% if gridData[c][r][0] == 0 %}
+                            <input name="{{ 'r' + r|string + 'c' + c|string }}" 
+                                   class="grid-cell {% if r % 3 == 0 %}top-border{% endif %} 
+                                                   {% if r % 3 == 2 %}bottom-border{% endif %} 
+                                                   {% if c % 3 == 0 %}left-border{% endif %} 
+                                                   {% if c % 3 == 2 %}right-border{% endif %}" 
+                                   type="number" value="">
+                        {% elif gridData[c][r][1] == True %}
+                            <input name="{{ 'r' + r|string + 'c' + c|string }}" 
+                                   class="grid-cell-correct {% if r % 3 == 0 %}top-border{% endif %} 
+                                                           {% if r % 3 == 2 %}bottom-border{% endif %} 
+                                                           {% if c % 3 == 0 %}left-border{% endif %} 
+                                                           {% if c % 3 == 2 %}right-border{% endif %}" 
+                                   type="number" value="{{ gridData[c][r][0] }}" readonly>
+                        {% else %}
+                            <input name="{{ 'r' + r|string + 'c' + c|string }}" 
+                                   class="grid-cell-wrong {% if r % 3 == 0 %}top-border{% endif %} 
+                                                          {% if r % 3 == 2 %}bottom-border{% endif %} 
+                                                          {% if c % 3 == 0 %}left-border{% endif %} 
+                                                          {% if c % 3 == 2 %}right-border{% endif %}" 
+                                   type="number" value="{{ gridData[c][r][0] }}">
+                        {% endif %}
+                    {% endfor %}
+                </div>
                 {% endfor %}
             </div>
-            {% endfor %}
-            </div>
-            <input type = "submit" value = "Check Numbers">
+            <input type="submit" value="Check Numbers">
             <button type="submit" name="action" value="showSolution">Show Solution</button>
         </div>
     </form>
 </body>
 </html>
-
