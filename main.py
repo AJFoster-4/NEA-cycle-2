@@ -73,7 +73,7 @@ def displayGrid():
 
             for r in range(9):
                 for c in range(9):
-                    gridData[r][c][0]=solution[c][r]
+                    gridData[r][c][0]=solution[r][c]
                     gridData[r][c][1]=True
 
         else:
@@ -99,14 +99,14 @@ def displayGrid():
                     cellName = f"r{r}c{c}"
                     cellValue = formData.get(cellName, "")
                     if cellValue.isdigit():
-                        userGridData[c][r]=(int(cellValue))
+                        userGridData[r][c]=(int(cellValue))
                     else:
-                        userGridData[c][r]=0
+                        userGridData[r][c]=0
             
             #compare this new list with the solution and assign True or False depending on whether cells are correct
             for r in range(9):
                 for c in range(9):
-                    if userGridData[r][c]==solution[c][r] and userGridData[r][c]!=0:
+                    if userGridData[r][c]==solution[r][c] and userGridData[r][c]!=0:
                         gridData[r][c][0]=userGridData[r][c]
                         gridData[r][c][1]=True
                     elif userGridData[r][c]==0:
@@ -116,8 +116,6 @@ def displayGrid():
                         gridData[r][c][1]=False
         
     else:
-        ##Generate a new sudoku
-        ##Form this as a grid and send the solution and initial grid
         
         gridDataRaw=[
             [8,0,0,4,0,6,0,0,7],
@@ -147,11 +145,11 @@ def displayGrid():
         for r in range(9):
             for c in range(9):
                 if gridDataRaw[r][c]!=0:
-                    gridData[c][r][0]=gridDataRaw[r][c]
-                    gridData[c][r][1]=True
+                    gridData[r][c][0]=gridDataRaw[r][c]
+                    gridData[r][c][1]=True
                 else:
-                    gridData[c][r][0]=gridDataRaw[r][c]
-                    gridData[c][r][1]=None
+                    gridData[r][c][0]=gridDataRaw[r][c]
+                    gridData[r][c][1]=None
 
 
         empty=[row[:] for row in gridDataRaw]
@@ -172,7 +170,6 @@ app.run(debug = True)
 
 #error log- highlighting function
 
-#added [0] to the end of the gridData calls on lines 23 and 25 in html so the numbers are actually displayed (perviously blank cells)
 #globalised solution and gridData
 #new error- everything highlighted red
 #error was on lines 91 and 93, changed c and r around
