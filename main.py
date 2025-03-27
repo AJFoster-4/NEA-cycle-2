@@ -99,7 +99,7 @@ def displayGrid():
                     cellName = f"r{r}c{c}"
                     cellValue = formData.get(cellName, "")
                     if cellValue.isdigit():
-                        userGridData[r][c]=(int(cellValue))
+                        userGridData[r][c]=int(cellValue)
                     else:
                         userGridData[r][c]=0
             
@@ -155,23 +155,10 @@ def displayGrid():
         empty=[row[:] for row in gridDataRaw]
         solution=solve(empty)
         
-
-        
-        
     return render_template("solution.html", gridData = gridData)
 
 
 
 
 
-app.run(debug = True)  
-
-
-
-#error log- highlighting function
-
-#globalised solution and gridData
-#new error- everything highlighted red
-#error was on lines 91 and 93, changed c and r around
-#added lines 99 and 104- this meant that the grid wasn't reset to its original state after the form was submitted
-#new error- when a cell is highlighted red, the number inside is replaced with the correct number (very simple fix on line 104, it was a silly mistake)
+app.run(debug = True)
