@@ -60,12 +60,12 @@ solution=None
 gridData=None
 
 
-@app.route("/", methods = ["get","post"])
+@app.route("/", methods=["get","post"])
 def displayGrid():
 
     global solution, gridData
 
-    if request.method == "POST":
+    if request.method=="POST":
 
         action=request.form.get("action")
 
@@ -78,11 +78,11 @@ def displayGrid():
 
         else:
         
-            #retrieve form data and turn it into a list
+            #retrieve form data and turn it into a list (userGridData)
 
-            formData = request.form
+            formData=request.form
 
-            userGridData = [
+            userGridData=[
                     ["","","","","","","","",""],
                     ["","","","","","","","",""],
                     ["","","","","","","","",""],
@@ -129,7 +129,7 @@ def displayGrid():
             [3,0,0,9,0,2,0,0,5]
         ]
 
-        gridData = [
+        gridData=[
             [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
             [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
             [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]],
@@ -141,7 +141,7 @@ def displayGrid():
             [[None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None], [None, None]]
         ]
 
-    
+        #converts grid data from 2D to 3D, where the first index is the number and the second index is a boolean indicating whether the cell is filled
         for r in range(9):
             for c in range(9):
                 if gridDataRaw[r][c]!=0:
@@ -155,7 +155,7 @@ def displayGrid():
         empty=[row[:] for row in gridDataRaw]
         solution=solve(empty)
         
-    return render_template("solution.html", gridData = gridData)
+    return render_template("solution.html", gridData=gridData)
 
 
 
